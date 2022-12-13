@@ -1,0 +1,88 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    text-align: center;
+}
+
+header{
+    background-color: black;
+    color: white;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-container{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    background-color: rgb(193, 211, 245);
+}
+
+.editor{
+    width: 520px;
+    max-width: 510px;
+    background-color: rgb(57, 50, 50);
+    color: white;
+    min-height: 350px;
+    height: auto;
+    margin: 20px;
+}
+
+textarea{
+    width: 480px;
+    max-width: 500px;
+    min-height: 450px;
+    padding: 5px;
+}
+
+.previewer{
+    width: 500px;
+    max-width: 500px;
+    border: 2px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    max-width: 500px;
+    background-color: white;
+    min-height: 750px;
+    height: auto;
+    margin: 20px;
+}
+
+.previewer #heading{
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background-color: rgb(144, 222, 35);
+}
+
+#preview{
+    padding-left: 30px;
+    padding-right: 20px;
+    word-wrap: break-word;
+}
+
+#preview *{
+    text-align: left;
+    margin: 5px;
+    font-family: monospace;
+}
+#preview img{
+    width: 300px;
+}
+
+#forkme_banner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right:10px;
+    z-index: 10;
+    padding: 10px 50px 10px 10px;
+    color: #fff;
+    background: url(./blacktocat.png) #0090ff no-repeat 95% 50%;   
+}

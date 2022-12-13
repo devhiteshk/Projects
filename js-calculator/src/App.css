@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Share+Tech+Mono&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    background-color: rgb(255, 255, 255);
+}
+
+.App{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: rgb(16, 20, 60);
+    color: white;
+    height: 60px;
+    margin-bottom: 70px;
+    margin-top: 0;
+}
+
+.calculator{
+    background-color: black;
+    border: 4px solid rgb(0, 0, 0);
+    min-width:280px;
+    max-width: 320px;
+    height: auto;
+    font-size: 18px;
+}
+
+.calculation-panel{
+    padding-right: 5px;
+    color: white;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-left: 2.5px;
+    margin-top: 1px;
+    margin-right: 2.5px;
+    min-height: 30px;
+    background-color: rgb(0, 0, 0);
+    font-family: 'Bad Script', cursive;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.current-panel{
+    display: flex;
+    padding-right: 5px;
+    justify-content: right;
+    align-items: center;
+    color: white;
+    margin-left: 2.5px;
+    margin-right: 2.5px;
+    margin-bottom:0.5px;
+    min-height: 30px;
+    background-color: rgb(0, 0, 0);
+    font-family: 'Bad Script', cursive;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.keypad-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 320px;
+}
+
+
+.pad-key{
+    font-family: 'Bad Script', cursive;
+    font-family: 'Share Tech Mono', monospace;
+    position: relative;
+    background-color: rgb(47, 42, 42);
+    margin: 0.5px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 78px;
+    height: 63px;
+}
+
+.pad-key:hover{
+    background-color: rgb(55, 61, 61);
+}
+
+.clear{
+    background-color: brown;
+    width: 157px;
+    height: 63px;
+}
+
+.clear:hover{
+    background-color: rgb(217, 56, 56);
+}
+
+.equals{
+    background-color: rgb(22, 73, 14);
+    width: 236px;
+    height: 63px;
+}
+
+.equals:hover{
+    background-color: rgb(31, 153, 31);
+}
+
+footer{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center ;
+}
+
+footer a{
+    font-weight: 600;
+}
+

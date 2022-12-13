@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e2e1811b.css",
+    "main.js": "/static/js/main.b89ee4b9.js",
+    "static/media/Technology-Bold.ttf": "/static/media/Technology-Bold.8cdd2cfe2ab96f416aff.ttf",
+    "index.html": "/index.html",
+    "main.e2e1811b.css.map": "/static/css/main.e2e1811b.css.map",
+    "main.b89ee4b9.js.map": "/static/js/main.b89ee4b9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e2e1811b.css",
+    "static/js/main.b89ee4b9.js"
+  ]
+}
