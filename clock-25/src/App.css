@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Share+Tech+Mono&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    
+}
+
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(255, 255, 255);
+    height: 40px;
+    margin-bottom: 40px;
+    background-color: rgb(241, 136, 211);
+}
+
+.length-main-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100px;
+    
+}
+
+.d-pointer{
+    pointer-events: none;
+}
+
+.Length-container{
+    font-size: 20px;
+    display: flex;
+    margin-top: 60px;
+    margin-left: 20px;
+    margin-right: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+i{
+    margin: 10px;
+    font-size: 24px;
+}
+
+.button-container{
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-container h4{
+    color: rgb(22, 167, 73);
+}
+
+.clock-button-container{
+    font-size: 25px;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.clock-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.clock{
+    background-color: rgb(84, 210, 235);
+    color: white;
+    width: 250px;
+    height: 120px;
+    border-radius: 60px;
+    border: 2px solid rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.clock p{
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.clock h3{
+    font-size: 40px;
+    margin: 10px;
+    font-family: 'Bad Script', cursive;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
+}
+
+i:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+    color: red;
+}
