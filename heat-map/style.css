@@ -1,0 +1,18 @@
+body{
+    background-color: #E0E3F0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    color: #163D57
+}
+
+svg{
+    background-color: rgb(64, 56, 152);
+    color: white;
+}
+
+.cell:hover{
+    fill: black
+}
