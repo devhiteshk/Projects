@@ -41,17 +41,17 @@ app.get("/api/:date?", function (req, res) {
     responseObject["utc"] = new Date(input).toUTCString();
   } else {
     input = parseInt(input);
-    responseObject["utc"] = new Date(input);
+    responseObject["utc"] = new Date(input).toUTCString();
   }
 
   if (!responseObject["unix"] || !responseObject["utc"]) {
-    responseObject.json({ error: "invalid date" });
+    responseObject.json({ error: "Invalid Date" });
   }
 
   res.json(responseObject);
 });
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
+var listener = app.listen(3000 || process.env.PORT, function () {
   console.log("Your app is listening on port " + listener.address().port);
 });
