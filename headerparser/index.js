@@ -20,13 +20,11 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
 });
 
-app.set("trust proxy", true);
-
+app.enable("trust proxy");
 // your first API endpoint...
 app.get("/api/whoami", function (req, res) {
   let res_obj = {};
-
-  res_obj["ipaddress"] = IP.address();
+  res_obj["ipaddress"] = req.socket.remoteAddress;
   // res_obj["ipaddress"] = req.socket.remoteAddress;
   res_obj["language"] = req.headers["accept-language"];
   res_obj["software"] = req.headers["user-agent"];
