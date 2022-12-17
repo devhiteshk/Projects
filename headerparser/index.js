@@ -5,7 +5,7 @@
 require("dotenv").config();
 var express = require("express");
 var app = express();
-const http = require("http");
+const IP = require("ip");
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC
@@ -26,7 +26,8 @@ app.set("trust proxy", true);
 app.get("/api/whoami", function (req, res) {
   let res_obj = {};
 
-  res_obj["ip"] = req.socket.remoteAddress;
+  // res_obj["ipaddress"] = IP.address();
+  res_obj["ipaddress"] = req.socket.remoteAddress;
   res_obj["language"] = req.headers["accept-language"];
   res_obj["software"] = req.headers["user-agent"];
 
