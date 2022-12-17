@@ -18,15 +18,13 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
 });
 
-// your first API endpoint...
-app.get("/api/hello", function (req, res) {
-  res.json({ greeting: "hello API" });
-});
-
-let responseObject = {};
+// // your first API endpoint...
+// app.get("/api/hello", function (req, res) {
+//   res.json({ greeting: "hello API" });
+// });
 
 app.get("/api/", function (req, res) {
-  responseObject = {};
+  let responseObject = {};
   let r = new Date().getTime();
   responseObject["unix"] = r;
   responseObject["utc"] = new Date().toUTCString();
@@ -34,25 +32,28 @@ app.get("/api/", function (req, res) {
 });
 
 app.get("/api/:date?", function (req, res) {
-  let input = req.params.date;
+  let responseObject = {};
+  let input = req.params;
 
-  if (input.includes("-")) {
-    let d = new Date(input).getTime();
-    responseObject["unix"] = d;
-    responseObject["utc"] = new Date(input).toUTCString();
+  let d = new Date(input.date).valueOf();
+  responseObject["unix"] = d;
+  responseObject["utc"] = new Date(input.date).toUTCString();
+  if (input.date.includes("-")) {
+    res.json(responseObject);
   } else {
-    input = parseInt(input);
-    responseObject["utc"] = new Date(input).toUTCString();
-  }
+    let sec = Number(input.date);
+    responseObject["unix"] = sec;
+    responseObject["utc"] = new Date(sec).toUTCString();
 
-  if (!responseObject["unix"] || !responseObject["utc"]) {
-    res.json({ error: "Invalid Date" });
+    if (!responseObject["unix"] || !responseObject["utc"]) {
+      res.json({ error: "Invalid Date" });
+    } else {
+      res.json(responseObject);
+    }
   }
-
-  res.json(responseObject);
 });
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
+var listener = app.listen(3000 || process.env.PORT, function () {
   console.log("Your app is listening on port " + listener.address().port);
 });
