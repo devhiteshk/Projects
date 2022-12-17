@@ -35,11 +35,15 @@ app.get("/api/:date?", function (req, res) {
   let responseObject = {};
   let input = req.params;
 
-  let d = new Date(input.date).valueOf();
-  responseObject["unix"] = d;
-  responseObject["utc"] = new Date(input.date).toUTCString();
   if (input.date.includes("-")) {
-    res.json(responseObject);
+    let d = new Date(input.date).valueOf();
+    responseObject["unix"] = d;
+    responseObject["utc"] = new Date(input.date).toUTCString();
+    if (!responseObject["unix"] || !responseObject["utc"]) {
+      res.json({ error: "Invalid Date" });
+    } else {
+      res.json(responseObject);
+    }
   } else {
     let sec = Number(input.date);
     responseObject["unix"] = sec;
