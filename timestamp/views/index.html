@@ -9,26 +9,46 @@
 </head>
 
 <body>
-  <h1>Timestamp Microservice</h1>
+  <div class="heading">
+    <h1>Timestamp Microservice</h1>
+  </div>
   <hr />
   <div class="container">
-    <h3>Example Usage:</h3>
-    <ul>
-      <li><a href="api/2015-12-25">[project url]/api/2015-12-25</a></li>
-      <li><a href="api/1451001600000">[project url]/api/1451001600000</a></li>
-    </ul>
+    <h4>Enter Date to for Output</h4>
+    <form id="myForm">
+      <span>Enter a valid date:</span><br> <input type="text" name="input_date" id="input">
+      <br>
+      <button type="submit">Submit</button>
+    </form>
 
-    <h3>Example Output:</h3>
-    <p>
-      <code>{"unix":1451001600000, "utc":"Fri, 25 Dec 2015 00:00:00 GMT"}</code>
+    <h3>Output:</h3>
+    <p class="output-container">
+      <code id="set-result"></code>
     </p>
   </div>
   <div class="footer">
     <p>
       By
-      <span>Hitesh</span>
+      <span>@devHiteshK</span>
     </p>
   </div>
+  <script src="./script.js"></script>
 </body>
+<script>
+  let myForm = document.getElementById("myForm");
+
+  myForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const data = document.querySelector('input').value;
+
+    const response = await fetch(`./api/${data}`)
+    const myJson = await response.json()
+    console.log(myJson);
+
+    document.getElementById('set-result').innerText = `${JSON.stringify(myJson)}`
+
+  })
+</script>
 
 </html>

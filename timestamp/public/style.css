@@ -1,12 +1,56 @@
 /****** Main Styling ******/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+	margin: 0;
+	padding: 0;
+	color:white;
+	font-family: 'Poppins', sans-serif;
+}
 
 body {
 	font-family: 'Roboto', sans-serif;
 	font-size: 16px;
 	color: #222;
-	background-color: #FaFaFa;
+	background-color: #2e2148;
 	text-align: center;
 	line-height: 1.4em;
+}
+
+.heading{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+	height: 100px;
+	/* background-color: aquamarine; */
+	color: white;
+}
+
+.output-container{
+	margin-top: 20px;
+}
+
+button{
+	margin-top: 20px;
+	width: 100px;
+	height: 30px;
+	background-color: rgb(51, 147, 147);
+	border-radius: 1px;
+	border: 1px solid rgb(53, 121, 153);
+}
+
+button:hover{
+	cursor: pointer;
+	background-color: rgb(97, 153, 60);
+	color: black;
+}
+
+#input{
+color: black;
+	height: 35px;
+	width: 270px;
+	margin-top: 15px;
 }
 
 .container {
@@ -14,23 +58,27 @@ body {
 	margin-top: 40px;
 }
 
-h3 {
-  margin-top: 30px;
+h4 {
+  margin-top: 50px;
+  margin-bottom: 30px;
 }
 
+h3 {
+margin-top: 40px;
+  }
+
 hr {
-	margin: 25px;
+	color: white;
 }
 
 .footer {
-	margin-top: 40px;
+	margin-top: 18px;
 }
 
 code {
   font-family: monospace;
   padding: 2px;
-  color: black;
-  background-color: #fff;
+  color: rgb(255, 255, 255);
 }
 
 ul {
