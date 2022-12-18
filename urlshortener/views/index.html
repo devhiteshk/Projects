@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+
+<link>
+<title>Minature URL</title>
+<link rel="icon" type="image/png" href="/public/favicon.ico" />
+<link href="/public/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div class="heading">
+    <h1><span id="headingi">Miniature<span></h1>
+    <h2>URL 🌐</h2>
+  </div>
+  <main>
+    <section>
+      <form id="form" action="api/shorturl" method="POST" target="hiddenFrame">
+        <fieldset>
+          <legend>URL Shortener</legend>
+          <label for="url_input">Enter URL:</label><br>
+          <input id="url_input" type="text" name="url" placeholder="https://hiteshk.dev" /><br>
+          <input type="submit" id="button" value="Shorten🔥" />
+        </fieldset>
+      </form>
+    </section>
+  </main>
+  <div class="shortened-url">
+    <div class="short-cont">
+      <span>Short URL:</span><br><a id="result-url" class="hidden" target="_blank"></a>
+    </div>
+  </div>
+  <footer>
+    <p>By <a href="https://hiteshk.dev">@devHiteshK</a></p>
+  </footer>
+  <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+
+</body>
+<script>
+
+  let myForm = document.getElementById("form");
+
+  let getData = async () => {
+
+    const data = document.getElementById('url_input').value
+    const response = await fetch(`./surl`)
+    const myJson = await response.json()
+
+    myJson.map((i) => {
+      if (i.original_url === data) {
+        let link = window.location.href + 'api/shorturl/' + i.short_url;
+        document.getElementById('result-url').innerText = link
+        document.getElementById('result-url').href = link
+        document.getElementById('result-url').classList.remove('hidden');
+      }
+    })
+  }
+
+  myForm.addEventListener("submit", async (e) => {
+
+    setTimeout(getData, 1100);
+    myForm.submit();
+  })
+
+</script>
+
+</html>
