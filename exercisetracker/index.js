@@ -101,11 +101,12 @@ app.post("/api/users/:_id/exercises", (request, response) => {
   }
 
   User.findByIdAndUpdate(
-    request.body[":_id"],
+    { _id: request.body[":_id"] },
     { $push: { log: newExerciseItem } },
     { new: true },
     (error, updatedUser) => {
       if (!error) {
+        console.log(updatedUser);
         let responseObject = {};
         responseObject["_id"] = request.body[":_id"];
         responseObject["username"] = updatedUser.username;
