@@ -63,7 +63,7 @@ app.post("/api/users", (req, res) => {
 });
 
 app.get("/api/users", (req, res) => {
-  console.log("get users", request.body);
+  console.log("get users", req.body);
   User.find({}, (error, arrayOfUsers) => {
     if (!error) {
       res.json(arrayOfUsers);
@@ -77,9 +77,9 @@ function validDate(d) {
   return x instanceof Date && !isNaN(x);
 }
 
-app.get("/api/users//exercises", (req, res) => {
-  res.json({ error: "user doesn't exist" });
-});
+// app.get("/api/users//exercises", (req, res) => {
+//   res.json({ error: "user doesn't exist" });
+// });
 
 app.post("/api/users/:_id/exercises", (request, response) => {
   console.log("post api/id/ex", request.body);
@@ -107,8 +107,8 @@ app.post("/api/users/:_id/exercises", (request, response) => {
     (error, updatedUser) => {
       if (!error) {
         let responseObject = {};
-        // responseObject["_id"] = updatedUser["_id"];
-        responseObject["username"] = updatedUser['username'];
+        responseObject["_id"] = updatedUser["_id"];
+        responseObject["username"] = updatedUser["username"];
         responseObject["date"] = new Date(newExerciseItem.date).toDateString();
         responseObject["duration"] = newExerciseItem.duration;
         responseObject["description"] = newExerciseItem.description;
@@ -124,8 +124,8 @@ app.get("/api/users/:_id/logs", (req, res) => {
   User.findById(req_id, (error, obt_user) => {
     if (!error) {
       let responseObject = {};
-      responseObject["_id"] = obt_user._id;
-      responseObject["username"] = obt_user.username;
+      responseObject["_id"] = obt_user["_id"];
+      responseObject["username"] = obt_user["username"];
       responseObject["count"] = obt_user.log.length;
       responseObject["log"] = obt_user.log;
 
@@ -148,10 +148,9 @@ app.get("/api/users/:_id/logs", (req, res) => {
           let sessionDate = new Date(session.date).getTime();
           return sessionDate >= fromDate || sessionDate <= toDate;
         });
-
-        if (req.query.limit) {
-          responseObject.log = responseObject.log.slice(0, req.query.limit);
-        }
+      }
+      if (req.query.limit) {
+        responseObject.log = responseObject.log.slice(0, req.query.limit);
       }
 
       res.json(responseObject);
