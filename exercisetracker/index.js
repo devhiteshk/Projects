@@ -91,7 +91,7 @@ app.post("/api/users/:_id/exercises", (request, response) => {
 
   // console.log(newExerciseItem.date);
 
-  if (validDate(request.body.date)) {
+  if (validDate(request.body.date) === true) {
     newExerciseItem.date = new Date(request.body.date).toDateString();
   } else if (request.body.date === "") {
     newExerciseItem.date = new Date().toDateString();
