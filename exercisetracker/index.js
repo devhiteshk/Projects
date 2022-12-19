@@ -97,7 +97,7 @@ app.post("/api/users/:_id/exercises", (request, response) => {
   } else if (request.body.date === "") {
     newExerciseItem.date = new Date().toDateString();
   } else {
-    res.json({ error: "invalid date" });
+    response.json({ error: "invalid date" });
   }
 
   User.findByIdAndUpdate(
@@ -108,7 +108,7 @@ app.post("/api/users/:_id/exercises", (request, response) => {
       if (!error) {
         let responseObject = {};
         // responseObject["_id"] = updatedUser["_id"];
-        responseObject["username"] = updatedUser.username;
+        responseObject["username"] = updatedUser['username'];
         responseObject["date"] = new Date(newExerciseItem.date).toDateString();
         responseObject["duration"] = newExerciseItem.duration;
         responseObject["description"] = newExerciseItem.description;
