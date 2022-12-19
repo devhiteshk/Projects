@@ -32,7 +32,7 @@ const defaultDate = () => new Date().toISOString().slice(0, 10);
 
 const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: false },
-  exercices: [
+  exercises: [
     {
       description: { type: String },
       duration: { type: Number },
@@ -82,7 +82,7 @@ function addExercise(req, res) {
   }; // exrecise object to add
   User.findByIdAndUpdate(
     userId, // find user by _id
-    { $push: { exercices: exObj } }, // add exObj to exercices[]
+    { $push: { exercises: exObj } }, // add exObj to exercises[]
     { new: true },
     function (err, updatedUser) {
       if (err) {
@@ -111,13 +111,13 @@ function getLog(req, res) {
       return console.log("getLog() error:", err);
     }
     try {
-      let e1 = user.exercices.filter((e) => e.date >= dFrom && e.date <= dTo);
+      let e1 = user.exercises.filter((e) => e.date >= dFrom && e.date <= dTo);
       let e2 = e1.map((e) => ({
         description: e.description,
         duration: e.duration,
         date: e.date, //new Date(e.date).toDateString()}
       }));
-      let ex = user.exercices
+      let ex = user.exercises
         .filter((e) => e.date >= dFrom && e.date <= dTo)
         .map((e) => ({
           description: e.description,
