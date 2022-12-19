@@ -54,7 +54,7 @@ app.post("/api/users", (req, res) => {
     if (!error) {
       let resObject = {};
       resObject["username"] = savedUser.username;
-      resObject["_id"] = savedUser.id;
+      resObject["_id"] = savedUser._id;
       res.json(resObject);
     } else {
       console.log(error);
@@ -124,7 +124,7 @@ app.get("/api/users/:_id/logs", (req, res) => {
   User.findById(req_id, (error, obt_user) => {
     if (!error) {
       let responseObject = {};
-      responseObject["_id"] = obt_user.id;
+      responseObject["_id"] = obt_user._id;
       responseObject["username"] = obt_user.username;
       responseObject["count"] = obt_user.log.length;
       responseObject["log"] = obt_user.log;
