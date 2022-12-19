@@ -54,7 +54,7 @@ app.post("/api/users", (req, res) => {
     if (!error) {
       let resObject = {};
       resObject["username"] = savedUser.username;
-      resObject["id"] = savedUser.id;
+      resObject["_id"] = savedUser.id;
       res.json(resObject);
     } else {
       console.log(error);
