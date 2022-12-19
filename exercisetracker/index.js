@@ -48,7 +48,7 @@ let User = mongoose.model("User", userSchema);
 mongoose.set("strictQuery", false);
 
 app.post("/api/users", (req, res) => {
-  console.log(req.body);
+  console.log("post users", req.body);
   let newUser = new User({ username: req.body.username });
   newUser.save((error, savedUser) => {
     if (!error) {
@@ -63,6 +63,7 @@ app.post("/api/users", (req, res) => {
 });
 
 app.get("/api/users", (req, res) => {
+  console.log("get users", request.body);
   User.find({}, (error, arrayOfUsers) => {
     if (!error) {
       res.json(arrayOfUsers);
@@ -76,8 +77,12 @@ function validDate(d) {
   return x instanceof Date && !isNaN(x);
 }
 
+app.get("/api/users//exercises", (req, res) => {
+  res.json({ error: "user doesn't exist" });
+});
+
 app.post("/api/users/:_id/exercises", (request, response) => {
-  console.log(request.body);
+  console.log("post api/id/ex", request.body);
 
   let newExerciseItem = new Session({
     description: request.body.description,
@@ -102,7 +107,7 @@ app.post("/api/users/:_id/exercises", (request, response) => {
     (error, updatedUser) => {
       if (!error) {
         let responseObject = {};
-        responseObject["_id"] = updatedUser["_id"];
+        // responseObject["_id"] = updatedUser["_id"];
         responseObject["username"] = updatedUser.username;
         responseObject["date"] = new Date(newExerciseItem.date).toDateString();
         responseObject["duration"] = newExerciseItem.duration;
@@ -114,7 +119,7 @@ app.post("/api/users/:_id/exercises", (request, response) => {
 });
 
 app.get("/api/users/:_id/logs", (req, res) => {
-  console.log(req.query.limit);
+  console.log("api/id/logs", req.body);
   let req_id = req.params._id;
   User.findById(req_id, (error, obt_user) => {
     if (!error) {
