@@ -2,157 +2,158 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 require("dotenv").config();
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const mongodb = require("mongodb");
 
-const uri = process.env.URI;
-
-mongoose
-  .connect(uri)
-  .then(() => {
-    console.log("connected to db");
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
-
-app.use(bodyParser.urlencoded({ extended: false }));
+const ERR_USER_NOTFUND = { error: "user not found" };
 
 app.use(cors());
-app.use(express.static("public"));
-
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/views/index.html");
-});
-
-const listener = app.listen(process.env.PORT || 3000, () => {
-  console.log("Your app is listening on port " + listener.address().port);
-});
-
-// const exerciseSchema = new mongoose.Schema({
-//   description: { type: String, required: true },
-//   duration: { type: Number, required: true },
-//   date: String,
-// });
-
-const userSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  log: [],
-});
-
-let User = mongoose.model("User", userSchema);
-
+app.use(express.static(__dirname + "/public"));
+app.use(express.urlencoded({ extended: false }));
 mongoose.set("strictQuery", false);
 
-app.post("/api/users", (req, res) => {
-  console.log("post users", req.body);
-  let newUser = new User({ username: req.body.username });
-  newUser.save((error, savedUser) => {
-    if (!error) {
-      let resObject = {};
-      resObject["username"] = savedUser.username;
-      resObject["_id"] = savedUser._id;
-      res.json(resObject);
-    } else {
-      console.log(error);
-    }
-  });
+// log for debugging
+/*
+app.use((req, res, next) => {
+  console.log(`LOG: ${req.method} ${req.path}`);
+  // if (req.method === 'POST') {
+  //   console.log('  body:', req.body);
+  // } else {
+  //   console.log(' params:', req.params);
+  // }
+  next();
+});
+*/
+// ---------------------- MongoDB ------------------------------
+mongoose.connect(process.env.URI).catch((err) => {
+  console.error("Cannot connect to mongoDB", err);
 });
 
-app.get("/api/users", (req, res) => {
-  console.log("get users", req.body);
-  User.find({}, (error, arrayOfUsers) => {
-    if (!error) {
-      res.json(arrayOfUsers);
-    }
-  });
+const defaultDate = () => new Date().toISOString().slice(0, 10);
+
+const userSchema = mongoose.Schema({
+  username: { type: String, required: true, unique: false },
+  exercices: [
+    {
+      description: { type: String },
+      duration: { type: Number },
+      date: { type: String, required: false },
+    },
+  ],
 });
+const User = mongoose.model("Users", userSchema);
 
-function validDate(d) {
-  var x = new Date(d);
-
-  return x instanceof Date && !isNaN(x);
+// create and save user (OK)
+function addUser(req, res) {
+  let username = req.body.username;
+  if (!username || username.length === 0) {
+    res.json({ error: "Invalid username" });
+  }
+  const user = new User({ username: username });
+  user.save(function (err, newUser) {
+    if (err) {
+      return console.log("addUser() error saving new user:", err);
+    }
+    res.json({ username: newUser.username, _id: newUser._id });
+  });
 }
 
-// app.get("/api/users//exercises", (req, res) => {
-//   res.json({ error: "user doesn't exist" });
-// });
-
-app.post("/api/users/:_id/exercises", (request, response) => {
-  console.log("post api/id/ex", request.body);
-
-  let newExerciseItem = {
-    description: String(request.body.description),
-    duration: Number(parseInt(request.body.duration)),
-    date: request.body.date,
-  };
-
-  // console.log(newExerciseItem.date);
-
-  if (validDate(request.body.date) === true) {
-    newExerciseItem.date = new Date(request.body.date).toDateString();
-  } else if (request.body.date === "") {
-    newExerciseItem.date = new Date().toDateString();
-  } else {
-    response.json({ error: "invalid date" });
-  }
-
-  User.findByIdAndUpdate(
-    { _id: request.body[":_id"] },
-    { $push: { log: newExerciseItem } },
-    { new: true },
-    (error, updatedUser) => {
-      if (!error) {
-        console.log(updatedUser);
-        let responseObject = {};
-        responseObject["_id"] = request.body[":_id"];
-        responseObject["username"] = updatedUser.username;
-        responseObject["date"] = new Date(newExerciseItem.date).toDateString();
-        responseObject["duration"] = newExerciseItem.duration;
-        responseObject["description"] = newExerciseItem.description;
-        response.json(responseObject);
+// get all users (OK)
+function getAllUsers(req, res) {
+  User.find()
+    .select("username _id")
+    .exec(function (err, userList) {
+      if (err) {
+        return console.log("getAllUsers() error:", err);
       }
+      res.json(userList);
+    });
+}
+/*
+You can POST to /api/users/:_id/exercises with form data 'description', 'duration', and optionally 'date'. 
+If no date is supplied, the current date will be used. 
+The response returned will be the user object with the exercise fields added.
+*/
+function addExercise(req, res) {
+  const userId = req.params.userId || req.body.userId; // userId from URL or from body
+  const exObj = {
+    description: req.body.description,
+    duration: +req.body.duration,
+    date: req.body.date || defaultDate(),
+  }; // exrecise object to add
+  User.findByIdAndUpdate(
+    userId, // find user by _id
+    { $push: { exercices: exObj } }, // add exObj to exercices[]
+    { new: true },
+    function (err, updatedUser) {
+      if (err) {
+        return console.log("update error:", err);
+      }
+      let returnObj = {
+        username: updatedUser.username,
+        description: exObj.description,
+        duration: exObj.duration,
+        _id: userId,
+        date: new Date(exObj.date).toDateString(),
+      };
+      res.json(returnObj);
     }
   );
-});
+}
 
-app.get("/api/users/:_id/logs", (req, res) => {
-  console.log("api/id/logs", req.body);
-  let req_id = req.params._id;
-  User.findById(req_id, (error, obt_user) => {
-    if (!error) {
-      let responseObject = {};
-      responseObject["_id"] = obt_user["_id"];
-      responseObject["username"] = obt_user["username"];
-      responseObject["count"] = obt_user.log.length;
-      responseObject["log"] = obt_user.log;
-
-      if (req.query.from || req.query.to) {
-        let fromDate = new Date(0);
-        let toDate = new Date();
-
-        if (req.query.from) {
-          fromDate = new Date(req.query.from);
-        }
-
-        if (req.query.to) {
-          toDate = new Date(req.query.to);
-        }
-
-        fromDate = fromDate.getTime();
-        toDate = toDate.getTime();
-
-        responseObject.log = responseObject.log.filter((session) => {
-          let sessionDate = new Date(session.date).getTime();
-          return sessionDate >= fromDate && sessionDate <= toDate;
-        });
-      }
-      if (req.query.limit) {
-        responseObject.log = responseObject.log.slice(0, req.query.limit);
-      }
-
-      res.json(responseObject);
+// get Logs
+function getLog(req, res) {
+  let userId = req.params["_id"];
+  let dFrom = req.query.from || "0000-00-00";
+  let dTo = req.query.to || "9999-99-99";
+  let limit = +req.query.limit || 10000;
+  User.findOne({ _id: userId }, function (err, user) {
+    if (err) {
+      return console.log("getLog() error:", err);
+    }
+    try {
+      let e1 = user.exercices.filter((e) => e.date >= dFrom && e.date <= dTo);
+      let e2 = e1.map((e) => ({
+        description: e.description,
+        duration: e.duration,
+        date: e.date, //new Date(e.date).toDateString()}
+      }));
+      let ex = user.exercices
+        .filter((e) => e.date >= dFrom && e.date <= dTo)
+        .map((e) => ({
+          description: e.description,
+          duration: e.duration,
+          date: e.date, //new Date(e.date).toDateString()}
+        }))
+        .slice(0, limit);
+      let logObj = {};
+      logObj.count = ex.length;
+      logObj._id = user._id;
+      logObj.username = user.username;
+      logObj.log = ex;
+      res.json(logObj);
+    } catch (e) {
+      console.log(e);
+      res.json(ERR_USER_NOTFUND);
     }
   });
+}
+
+// ------------------- main API ------------------------
+app.get("/", (req, res) => res.sendFile(__dirname + "/views/index.html"));
+
+app.post("/api/users", addUser);
+app.post("/api/exercise/new-user", addUser);
+
+app.get("/api/users", getAllUsers);
+app.get("/api/exercise/users", getAllUsers);
+
+app.post("/api/exercise/add", addExercise);
+
+app.all("/api/users/:userId/exercises", addExercise);
+
+app.get("/api/exercises/:userId/log", getLog);
+app.get("/api/users/:_id/logs", getLog);
+// ------------------- Listener ------------------------
+const listener = app.listen(process.env.PORT || 3000, () => {
+  console.log("Your app is listening on port " + listener.address().port);
 });
