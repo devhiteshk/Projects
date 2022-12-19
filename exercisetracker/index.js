@@ -5,7 +5,6 @@ require("dotenv").config();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const mongodb = require("mongodb");
-const { response } = require("express");
 
 const uri = process.env.URI;
 
