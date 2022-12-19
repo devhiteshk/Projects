@@ -30,18 +30,17 @@ const listener = app.listen(process.env.PORT || 3000, () => {
   console.log("Your app is listening on port " + listener.address().port);
 });
 
-const exerciseSchema = new mongoose.Schema({
-  description: { type: String, required: true },
-  duration: { type: Number, required: true },
-  date: String,
-});
+// const exerciseSchema = new mongoose.Schema({
+//   description: { type: String, required: true },
+//   duration: { type: Number, required: true },
+//   date: String,
+// });
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
-  log: [exerciseSchema],
+  log: [],
 });
 
-let Session = mongoose.model("Session", exerciseSchema);
 let User = mongoose.model("User", userSchema);
 
 mongoose.set("strictQuery", false);
@@ -83,11 +82,11 @@ function validDate(d) {
 app.post("/api/users/:_id/exercises", (request, response) => {
   console.log("post api/id/ex", request.body);
 
-  let newExerciseItem = new Session({
-    description: request.body.description,
-    duration: parseInt(request.body.duration),
+  let newExerciseItem = {
+    description: String(request.body.description),
+    duration: Number(parseInt(request.body.duration)),
     date: request.body.date,
-  });
+  };
 
   // console.log(newExerciseItem.date);
 
@@ -142,11 +141,11 @@ app.get("/api/users/:_id/logs", (req, res) => {
         }
 
         fromDate = fromDate.getTime();
-        fromDate = toDate.getTime();
+        toDate = toDate.getTime();
 
         responseObject.log = responseObject.log.filter((session) => {
           let sessionDate = new Date(session.date).getTime();
-          return sessionDate >= fromDate || sessionDate <= toDate;
+          return sessionDate >= fromDate && sessionDate <= toDate;
         });
       }
       if (req.query.limit) {
