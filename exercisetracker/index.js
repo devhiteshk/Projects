@@ -70,8 +70,14 @@ app.get("/api/users", (req, res) => {
   });
 });
 
+function validDate(d) {
+  var x = new Date(d);
+
+  return x instanceof Date && !isNaN(x);
+}
+
 app.post("/api/users/:_id/exercises", (request, response) => {
-  console.log(request.body[":_id"]);
+  console.log(request.body);
 
   let newExerciseItem = new Session({
     description: request.body.description,
@@ -79,8 +85,14 @@ app.post("/api/users/:_id/exercises", (request, response) => {
     date: request.body.date,
   });
 
-  if (newExerciseItem.date === "") {
-    newExerciseItem.date = new Date().toISOString().substring(0, 10);
+  // console.log(newExerciseItem.date);
+
+  if (validDate(request.body.date)) {
+    newExerciseItem.date = new Date(request.body.date).toDateString();
+  } else if (request.body.date === "") {
+    newExerciseItem.date = new Date().toDateString();
+  } else {
+    res.json({ error: "invalid date" });
   }
 
   User.findByIdAndUpdate(
