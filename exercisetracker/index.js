@@ -108,7 +108,7 @@ app.post("/api/users/:_id/exercises", (request, response) => {
       if (!error) {
         let responseObject = {};
         responseObject["_id"] = request.body[":_id"];
-        responseObject["username"] = updatedUser["username"];
+        responseObject["username"] = updatedUser.username;
         responseObject["date"] = new Date(newExerciseItem.date).toDateString();
         responseObject["duration"] = newExerciseItem.duration;
         responseObject["description"] = newExerciseItem.description;
