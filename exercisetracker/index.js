@@ -115,14 +115,14 @@ function getLog(req, res) {
       let e2 = e1.map((e) => ({
         description: e.description,
         duration: e.duration,
-        date: e.date, //new Date(e.date).toDateString()}
+        date: new Date(e.date).toDateString(),
       }));
       let ex = user.exercises
         .filter((e) => e.date >= dFrom && e.date <= dTo)
         .map((e) => ({
           description: e.description,
           duration: e.duration,
-          date: e.date, //new Date(e.date).toDateString()}
+          date: new Date(e.date).toDateString(),
         }))
         .slice(0, limit);
       let logObj = {};
