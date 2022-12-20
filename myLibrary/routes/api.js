@@ -14,6 +14,7 @@ let uri =
   "@memories.3ypawsz.mongodb.net/?retryWrites=true&w=majority";
 
 const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
 
 module.exports = function (app) {
   mongoose.connect(uri).then(() => console.log("connected to db"));
