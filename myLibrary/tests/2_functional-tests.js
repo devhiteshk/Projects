@@ -1,7 +1,7 @@
 /*
 *
 *
-*       FILL IN EACH FUNCTIONAL TEST BELOW COMPLETELY
+*       FILL IN EACH FUNCTIONAL TEST BELOW
 *       -----[Keep the tests in the same order!]-----
 *       
 */
