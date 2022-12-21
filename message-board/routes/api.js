@@ -1,5 +1,5 @@
 "use strict";
-require("dotenv").config();
+const dotenv = require("dotenv").config();
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
