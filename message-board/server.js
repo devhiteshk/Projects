@@ -12,16 +12,8 @@ const app = express();
 
 let helmet = require("helmet");
 
-app.use((req, res, next) => {
-  if (req.secure) {
-    next();
-  } else {
-    res.redirect("https://" + req.headers.host + req.url);
-  }
-});
-
-app.use(helmet.dnsPrefetchControl());
 app.use(helmet.frameguard({ action: "sameorigin" }));
+app.use(helmet.dnsPrefetchControl());
 // app.use(helmet.dnsPrefetchControl({allow: false}));
 app.use(helmet.referrerPolicy({ policy: "same-origin" }));
 
