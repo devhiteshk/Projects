@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to the Message Board</title>
+    <meta name="description" content="Message Board for FCC Challenge" />
+    <link
+      id="favicon"
+      rel="icon"
+      href="https://hyperdev.com/favicon-app.ico"
+      type="image/x-icon"
+    />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./public/style1.css" />
+  </head>
+  <body>
+    <header>
+      <h1 style="text-align: center; padding-top: 20px;">
+        Anonymous Message Board
+      </h1>
+    </header>
+        <hr style="margin: 10px" />
+    <div id="testui" style="text-align: center;">
+      <h2 style="text-align: center; padding-bottom: 15px;">API Tests:</h2>
+      <h3>New thread (POST /api/threads/:board)</h3>
+      <form action="/api/threads/test" method="post" id="newThread">
+        <input
+          type="text"
+          placeholder="board"
+          id="board1"
+          name="board"
+          required=""     
+        /><br />
+        <textarea
+          type="text"
+          placeholder="Thread text..."
+          name="text"
+          required=""
+          id= "text1"        
+        ></textarea
+        ><br />
+        <input
+          type="text"
+          placeholder="password to delete"
+          name="delete_password"
+          required=""
+        /><br />
+        <input type="submit" value="Submit" class="submit" />
+      </form>
+      <hr />
+      <h3 style="padding-top: 10px;">Report thread (PUT /api/threads/:board)</h3>
+      <form id="reportThread">
+        <input
+          type="text"
+          placeholder="board"
+          id="board2"
+          name="board"
+          required=""
+        /><br />
+        <input
+          type="text"
+          placeholder="id to report"
+          name="thread_id"
+          required=""
+        /><br />
+        <input type="submit" value="Submit" class="submit" />
+      </form>
+      <hr />
+      <h3 style="padding-top: 10px;">Delete thread (DELETE /api/threads/:board)</h3>
+      <form id="deleteThread">
+        <input
+          type="text"
+          placeholder="board"
+          id="board3"
+          name="board"
+          required=""
+        /><br />
+        <input
+          type="text"
+          placeholder="id to delete"
+          name="thread_id"
+          required=""
+        /><br />
+        <input
+          type="text"
+          placeholder="password"
+          name="delete_password"
+          required=""
+        /><br />
+        <input type="submit" value="Submit" class="submit" />
+      </form>
+      <hr />
+
+      <h3 style="padding-top: 10px;">New reply (POST /api/replies/:board)</h3>
+      <form action="/api/threads/test" method="post" id="newReply">
+        <input
+          type="text"
+          placeholder="board"
+          id="board4"
+          name="board"
+          required=""
+        /><br />
+        <input
+          type="text"
+          placeholder="thread id"
+          name="thread_id"
+          required=""
+        /><br />
+        <textarea
+          type="text"
+          placeholder="Thread text..."
+          name="text"
+          required=""
+        ></textarea
+        ><br />
+        <input
+          type="text"
+          placeholder="password to delete"
+          name="delete_password"
+          required=""
+        /><br />
+        <input type="submit" value="Submit" class="submit" />
+      </form>
+      <hr />
+      <h3 style="padding-top: 10px;">Report reply (PUT /api/replies/:board)</h3>
+      <form id="reportReply">
+        <input
+          type="text"
+          placeholder="board"
+          id="board5"
+          name="board"
+          required=""
+        /><br />
+        <input
+          type="text"
+          placeholder="thread id"
+          name="thread_id"
+          required=""
+        /><br />
+        <input
+          type="text"
+          placeholder="id to report"
+          name="reply_id"
+          required=""
+        /><br />
+        <input type="submit" value="Submit" class="submit" />
+      </form>
+      <hr />
+      <h3 style="padding-top: 10px;">Delete reply (DELETE /api/replies/:board)</h3>
+      <form id="deleteReply">
+        <input
+          type="text"
+          placeholder="board"
+          id="board6"
+          name="board"
+          required=""
+        /><br />
+        <input
+          type="text"
+          placeholder="thread id"
+          name="thread_id"
+          required=""
+        /><br />
+        <input
+          type="text"
+          placeholder="id to delete"
+          name="reply_id"
+          required=""
+        /><br />
+        <input
+          type="text"
+          placeholder="password"
+          name="delete_password"
+          required=""
+        /><br />
+        <input type="submit" value="Submit" class="submit" />
+      </form>
+    </div>
+    <div  style="text-align: center">
+      <br /><br />
+      <h2>
+        <a href="/b/general/">Go to testing <i>'/b/general/'</i> board</a>
+      </h2>
+    </div>
+    
+    <div>
+      <br />
+      <h3>
+        User Guide :
+      </h3>
+      <p>
+        When you reach at the message board, just copy the url or thread ID and send it to the people want to join the chat.
+      </p>
+    </div>
+    <hr style="margin: 50px; margin-top: 200px" />
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script
+      src="https://code.jquery.com/jquery-2.2.1.min.js"
+      integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(function() {
+        $("#newThread").submit(function() {
+          var board = $("#board1").val();
+          $(this).attr("action", "/api/threads/" + board);
+        });
+        $("#newReply").submit(function() {
+          var board = $("#board4").val();
+          $(this).attr("action", "/api/replies/" + board);
+        });
+        $("#reportThread").submit(function(e) {
+          var url = "/api/threads/" + $("#board2").val();
+          $.ajax({
+            type: "PUT",
+            url: url,
+            data: $(this).serialize(),
+            success: function(data) {
+              alert(data);
+            }
+          });
+          e.preventDefault();
+        });
+        $("#deleteThread").submit(function(e) {
+          var url = "/api/threads/" + $("#board3").val();
+          $.ajax({
+            type: "DELETE",
+            url: url,
+            data: $(this).serialize(),
+            success: function(data) {
+              alert(data);
+            }
+          });
+          e.preventDefault();
+        });
+        $("#reportReply").submit(function(e) {
+          var url = "/api/replies/" + $("#board5").val();
+          $.ajax({
+            type: "PUT",
+            url: url,
+            data: $(this).serialize(),
+            success: function(data) {
+              alert(data);
+            }
+          });
+          e.preventDefault();
+        });
+        $("#deleteReply").submit(function(e) {
+          var url = "/api/replies/" + $("#board6").val();
+          $.ajax({
+            type: "DELETE",
+            url: url,
+            data: $(this).serialize(),
+            success: function(data) {
+              alert(data);
+            }
+          });
+          e.preventDefault();
+        });
+      });
+    </script>
+  </body>
+</html>
