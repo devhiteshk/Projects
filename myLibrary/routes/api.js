@@ -24,9 +24,10 @@ module.exports = function (app) {
     .route("/api/books")
     .get(function (req, res) {
       libraryModel
-        .find({})
+        .find()
         .exec()
         .then((data) => {
+          console.log(data);
           if (data) res.json(data);
         })
         .catch((err) => console.log(err));
