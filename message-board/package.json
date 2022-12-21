@@ -1,31 +1,32 @@
 {
-	"name": "boilerplate-project-messagebaord",
-	"version": "0.0.1",
-	"description": "InfoSec project for freeCodeCamp",
-	"main": "server.js",
-	"scripts": {
-		"start": "node server.js",
-		"test":"mocha --timeout 5000 --recursive --exit --ui tdd tests/"
-	},
-	"dependencies": {
-		"body-parser": "^1.15.2",
-		"chai": "^4.2.0",
-		"chai-http": "^3.0.0",
-		"cors": "^2.8.1",
-		"dotenv": "^8.2.0",
-		"express": "^4.14.0",
-		"helmet": "^3.1.0",
-		"mocha": "^3.2.0",
-		"mongodb": "^3.6.6",
-		"mongoose": "^5.12.5"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/freeCodeCamp/boilerplate-project-messageboard"
-	},
-	"keywords": [
-		"node",
-		"express"
-	],
-	"license": "MIT"
+  "name": "boilerplate-project-messagebaord",
+  "version": "0.0.1",
+  "description": "InfoSec project for freeCodeCamp",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "mocha --timeout 5000 --recursive --exit --ui tdd tests/"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.1",
+    "chai": "^4.2.0",
+    "chai-http": "^3.0.0",
+    "cors": "^2.8.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.18.2",
+    "helmet": "^3.23.3",
+    "mocha": "^3.2.0",
+    "mongodb": "^4.7.0",
+    "mongoose": "^6.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freeCodeCamp/boilerplate-project-messageboard"
+  },
+  "keywords": [
+    "node",
+    "express"
+  ],
+  "license": "MIT"
 }
